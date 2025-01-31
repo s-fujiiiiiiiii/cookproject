@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>投稿する</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>投稿する</h1>
+            <nav>
+                <a href="{% url 'cookapp:post_create' %}" class="btn btn-link nav-link">投稿する</a>
+                <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link nav-link">ログアウト</button>
+                </form>
+                <a href="{% url 'cookapp:search' %}" class="text-white">検索</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="form">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">投稿</button>
+            </form>
+        </div>
+    </main>
+    <div class="button_line001">
+        <a href="{% url 'cookapp:index' %}">トップに戻る</a>
+    </div>
+</body>
+
+</html>

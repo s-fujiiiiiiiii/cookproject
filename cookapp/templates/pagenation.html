@@ -1,0 +1,31 @@
+<ul class="pagination" style="justify-content:center">
+    <!-- 前のページが存在する場合 -->
+    {% if page_obj.has_previous %}
+    <div class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+    </div>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+    <div class="page-item active">
+        <span class="page-link">{{ num }}</span>
+    </div>
+    {% else %}
+    <div class="page-item">
+        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    <!-- 次のページが存在する場合 -->
+    {% if page_obj.has_next %}
+    <div class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </div>
+    {% endif %}
+</ul>

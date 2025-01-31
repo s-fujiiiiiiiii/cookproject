@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ object.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>{{ object.title }}</h1>
+            <nav>
+                {% if user.is_authenticated %}
+                <a href="{% url 'cookapp:post_create' %}" class="btn btn-link nav-link">投稿する</a>
+                <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link nav-link">ログアウト</button>
+                </form>
+                <a href="{% url 'cookapp:search' %}" class="text-white">検索</a>
+                {% else %}
+                <a href="{% url 'accounts:signup' %}" class="text-white">サインアップ</a>
+                <a href="{% url 'accounts:login' %}" class="text-white">ログイン</a>
+                <a href="{% url 'cookapp:search' %}" class="text-white">検索</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+    <main>
+        <article class="recipe-container">
+            <div class="recipe-image-container">
+                <img src="{{ object.image1.url }}" alt="{{ object.title }}" class="recipe-image">
+                <h2>材料</h2>
+                <p>{{ object.material|linebreaks }}</p>
+            </div>
+            <div class="recipe-content">
+                <h2>作り方</h2>
+                <p>{{ object.content|linebreaks }}</p>
+            </div>
+            <div class="time">
+                <p>投稿日時: {{ object.posted_at }}</p>
+                <a href="{% url 'cookapp:post_list' %}?user={{ object.user.id }}" class="user-link">投稿者 : {{ object.user.username }}</a>
+            </div>
+        </article>
+        <div class="button_line001">
+            <a href="{% url 'cookapp:index' %}">トップに戻る</a>
+        </div>
+    </main>
+</body>
+
+</html>

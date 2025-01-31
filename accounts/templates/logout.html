@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ログアウト</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <div class="logout">
+        <header>
+            <h1>ログアウト</h1>
+        </header>
+        <main>
+            <p>ログアウトしました。</p>
+            <a href="{% url 'accounts:login' %}">ログインページへ</a>
+            <a href="{% url 'cookapp:index' %}">ホームに戻る</a>
+        </main>
+    </div>
+</body>
+
+</html>

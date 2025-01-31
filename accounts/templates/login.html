@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>ログイン</h1>
+            <nav>
+                <a href="{% url 'accounts:signup' %}" class="text-white">サインアップ</a>
+                <a href="{% url 'accounts:login' %}" class="text-white">ログイン</a>
+                <a href="{% url 'cookapp:search' %}" class="text-white">検索</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <form method="post" action="{% url 'accounts:login' %}">
+            {% csrf_token %}
+            <div>
+                <label for="username">ユーザー名:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">パスワード:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">ログイン</button>
+        </form>
+        <div class="login">
+            <a href="{% url 'accounts:signup' %}">新規登録</a>
+            <a href="{% url 'cookapp:index' %}">ホームに戻る</a>
+        </div>
+    </main>
+</body>
+
+</html>

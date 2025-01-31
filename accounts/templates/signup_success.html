@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>サインアップ成功</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <div class="signup_suc">
+        <header>
+            <h1>サインアップ成功</h1>
+        </header>
+        <main>
+            <p>ユーザー登録が完了しました！</p>
+            <a href="{% url 'accounts:login' %}">ログインページへ</a>
+            <a href="{% url 'cookapp:index' %}">ホームに戻る</a>
+        </main>
+    </div>
+</body>
+
+</html>

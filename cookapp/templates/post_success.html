@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>投稿完了</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>投稿完了</h1>
+    </header>
+    <main>
+      <div class="post_suc">
+        <p>投稿が完了しました！</p>
+        <a href="{% url 'cookapp:index' %}">トップに戻る</a>
+      </div>
+    </main>
+</body>
+</html>
