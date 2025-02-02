@@ -361,3 +361,8 @@ header .container {
 header nav {
   margin: 0 auto;
 }
+
+.nav-link.delete-link {
+  color: black;
+  margin-top: 25px;
+}

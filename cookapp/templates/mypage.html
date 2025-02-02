@@ -1,32 +1,23 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
-    <title>料理アプリ</title>
+    <title>マイページ</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-
 <body>
     <header>
         <div class="container">
-            <h1>料理アプリ</h1>
+            <h1>マイページ</h1>
             <nav>
-                {% if user.is_authenticated %}
+                <a href="{% url 'cookapp:index' %}" class="btn btn-link nav-link">ホーム</a>
                 <a href="{% url 'cookapp:post_create' %}" class="btn btn-link nav-link">投稿する</a>
-                <a href="{% url 'cookapp:mypage' %}" class="btn btn-link nav-link">マイページ</a> <!-- ここにマイページへのリンクを追加 -->
                 <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-link nav-link">ログアウト</button>
                 </form>
                 <a href="{% url 'cookapp:search' %}" class="text-white">検索</a>
-                {% else %}
-                <a href="{% url 'accounts:signup' %}" class="text-white">サインアップ</a>
-                <a href="{% url 'accounts:login' %}" class="text-white">ログイン</a>
-                <a href="{% url 'cookapp:search' %}" class="text-white">検索</a>
-                {% endif %}
             </nav>
         </div>
     </header>
@@ -35,9 +26,9 @@
     <main>
         <section>
             <div class="List_of_posts">
-                <h2>投稿一覧</h2>
+                <h2>{{ user.username }}さんの投稿</h2>
                 <ul>
-                    {% for post in orderby_records %}
+                    {% for post in user_posts %}
                     <div class="post-item">
                         <a href="{% url 'cookapp:blog_detail' post.pk %}">
                             <h3>{{ post.title }}</h3>
@@ -53,7 +44,8 @@
                                         <span>#{{ tag.name }}</span>{% if not forloop.last %}, {% endif %}
                                     {% endfor %}
                                 </p>
-                                <a href="{% url 'cookapp:post_list' %}?user={{ post.user.id }}" class="user-link">投稿者 : {{ post.user.username }}</a>
+                                <a href="{% url 'cookapp:post_list' %}?user={{ post.user.id }}" class="user-link">{{ post.user.username }}</a>
+                                <a href="{% url 'cookapp:post_delete' post.pk %}" class="btn btn-link nav-link delete-link">削除</a>
                             </div>
                         </div>
                     </div>
@@ -65,5 +57,4 @@
     </main>
     <script src="{% static 'js/scripts.js' %}"></script>
 </body>
-
 </html>

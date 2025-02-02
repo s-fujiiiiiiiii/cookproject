@@ -7,6 +7,8 @@ from .forms import BlogPostForm
 from django.urls import reverse_lazy
 from django.db.models import Q
 from taggit.models import Tag
+from django.contrib.auth import get_user_model
+from django.views.generic import DeleteView
 
 
 
@@ -48,11 +50,13 @@ class SearchResultsView(ListView):
         query = self.request.GET.get('q')
         if query:
             tag_ids = Tag.objects.filter(name__icontains=query).values_list('id', flat=True)
+            user_ids = get_user_model().objects.filter(username__icontains=query).values_list('id', flat=True)
             return BlogPost.objects.filter(
                 Q(title__icontains=query) | 
                 Q(material__icontains=query) | 
                 Q(content__icontains=query) | 
-                Q(tags__in=tag_ids)
+                Q(tags__in=tag_ids) |
+                Q(user__in=user_ids)
             ).distinct()
         return BlogPost.objects.none()
     
@@ -83,3 +87,21 @@ class PostListView(ListView):
         if user_id:
             context['username'] = BlogPost.objects.filter(user=user_id).first().user.username
         return context
+    
+class MyPageView(TemplateView):
+    template_name = 'mypage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['user_posts'] = BlogPost.objects.filter(user=user).order_by('-posted_at')
+        return context
+    
+class BlogPostDeleteView(DeleteView):
+    model = BlogPost
+    template_name = 'post_confirm_delete.html'
+    success_url = reverse_lazy('cookapp:mypage')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)

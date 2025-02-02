@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>投稿削除確認</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>投稿削除確認</h1>
+        </div>
+    </header>
+    <main>
+        <section>
+            <h2>本当にこの投稿を削除しますか？</h2>
+            <p>タイトル: {{ object.title }}</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit">削除</button>
+                <a href="{% url 'cookapp:mypage' %}">キャンセル</a>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

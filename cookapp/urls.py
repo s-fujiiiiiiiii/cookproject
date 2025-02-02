@@ -16,4 +16,6 @@ urlpatterns = [
  path('posts/', PostListView.as_view(), name='post_list'),
     path('search/', SearchResultsView.as_view(), name='search'),
     path('user-list/<int:user>/', views.UserView.as_view(), name='user_list'),
+    path('mypage/', views.MyPageView.as_view(), name='mypage'),
+    path('post/delete/<int:pk>/', views.BlogPostDeleteView.as_view(), name='post_delete'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
