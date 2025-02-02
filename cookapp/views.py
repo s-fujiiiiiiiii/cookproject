@@ -88,14 +88,14 @@ class PostListView(ListView):
             context['username'] = BlogPost.objects.filter(user=user_id).first().user.username
         return context
     
-class MyPageView(TemplateView):
+class MyPageView(ListView):
     template_name = 'mypage.html'
+    context_object_name = 'user_posts'
+    paginate_by = 4
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_queryset(self):
         user = self.request.user
-        context['user_posts'] = BlogPost.objects.filter(user=user).order_by('-posted_at')
-        return context
+        return BlogPost.objects.filter(user=user).order_by('-posted_at')
     
 class BlogPostDeleteView(DeleteView):
     model = BlogPost
