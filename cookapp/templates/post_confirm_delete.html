@@ -18,8 +18,8 @@
             <p>タイトル: {{ object.title }}</p>
             <form method="post">
                 {% csrf_token %}
-                <button type="submit">削除</button>
-                <a href="{% url 'cookapp:mypage' %}" style="color: rgb(186, 156, 105);">キャンセル</a>
+                <button type="submit" style="color: rgb(186, 156, 105); background: none; border: none; padding: 0; cursor: pointer; font-size: inherit;">削除</button>
+                <a href="{% url 'cookapp:mypage' %}" style="color: rgb(186, 156, 105); font-size: inherit;">キャンセル</a>
             </form>
         </section>
     </main>
