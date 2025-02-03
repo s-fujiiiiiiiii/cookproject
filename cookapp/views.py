@@ -54,7 +54,6 @@ class SearchResultsView(ListView):
             return BlogPost.objects.filter(
                 Q(title__icontains=query) | 
                 Q(material__icontains=query) | 
-                Q(content__icontains=query) | 
                 Q(tags__in=tag_ids) |
                 Q(user__in=user_ids)
             ).distinct()
